@@ -253,3 +253,38 @@ export const bills: Bill[] = [
     description: "Consultation & Tests",
   },
 ];
+
+export const medicines: Medicine[] = [
+  {
+    id: "M001",
+    name: "Amoxicillin 500mg",
+    stock: 532,
+    category: "Antibiotics",
+    status: "in-stock",
+    price: 12.99,
+    image:
+      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=400&h=400",
+  },
+  {
+    id: "M002",
+    name: "Lisinopril 10mg",
+    stock: 89,
+    category: "Blood Pressure",
+    status: "low-stock",
+    price: 15.5,
+    image:
+      "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=400&h=400",
+  },
+  {
+    id: "M003",
+    name: "Metformin 850mg",
+    stock: 0,
+    category: "Diabetes",
+    status: "out-of-stock",
+    price: 8.75,
+    image:
+      "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=400&h=400",
+  },
+];
+
+export const categories = ["Antibiotics", "Blood Pressure", "Diabetes", "Pain Relief", "Vitamins"];

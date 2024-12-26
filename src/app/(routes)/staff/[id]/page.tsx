@@ -31,10 +31,7 @@ const staffMember = {
   address: "123 Medical Center Dr, Suite 456",
   education: "MD - Harvard Medical School",
   experience: "15 years",
-  certifications: [
-    "Board Certified in Emergency Medicine",
-    "Advanced Trauma Life Support",
-  ],
+  certifications: ["Board Certified in Emergency Medicine", "Advanced Trauma Life Support"],
   schedule: {
     monday: "Morning Shift",
     tuesday: "Morning Shift",
@@ -67,10 +64,7 @@ async function StaffDetailPage({ params }: Props) {
           </Button>
         </Link>
 
-        <BookAppointmentDialog
-          doctorId={staffMember.id}
-          doctorName={staffMember.name}
-        />
+        <BookAppointmentDialog doctorId={staffMember.id} doctorName={staffMember.name} />
       </div>
 
       <Card>
@@ -106,9 +100,7 @@ async function StaffDetailPage({ params }: Props) {
               <p className="text-muted-foreground">{staffMember.role}</p>
 
               <div className="mt-2 flex items-center gap-2">
-                <Badge className={getStatusColor(staffMember.status)}>
-                  {staffMember.status}
-                </Badge>
+                <Badge className={getStatusColor(staffMember.status)}>{staffMember.status}</Badge>
                 <Badge variant="outline">{staffMember.department}</Badge>
                 <Badge variant="outline">{staffMember.specialty}</Badge>
               </div>
@@ -139,8 +131,7 @@ async function StaffDetailPage({ params }: Props) {
               </div>
 
               <div>
-                <span className="font-medium">Address:</span>{" "}
-                {staffMember.address}
+                <span className="font-medium">Address:</span> {staffMember.address}
               </div>
             </CardContent>
           </Card>
@@ -152,13 +143,11 @@ async function StaffDetailPage({ params }: Props) {
 
             <CardContent className="space-y-2">
               <div>
-                <span className="font-medium">Education:</span>{" "}
-                {staffMember.education}
+                <span className="font-medium">Education:</span> {staffMember.education}
               </div>
 
               <div>
-                <span className="font-medium">Experience:</span>{" "}
-                {staffMember.experience}
+                <span className="font-medium">Experience:</span> {staffMember.experience}
               </div>
 
               <div>
@@ -187,7 +176,7 @@ async function StaffDetailPage({ params }: Props) {
                     key={day}
                     className="flex items-center justify-between rounded-lg border p-3"
                   >
-                    <span className="font-medium capitalize">{day}</span>
+                    <span className="sfont-medium capitalize">{day}</span>
                     <span
                       className={`rounded px-2 py-1 ${shift === "Off" ? "bg-gray-100" : "bg-blue-100"}`}
                     >

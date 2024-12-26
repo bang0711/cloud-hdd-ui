@@ -90,3 +90,13 @@ type Bill = {
   status: "paid" | "pending" | "overdue";
   description: string;
 };
+
+type Medicine = {
+  id: string;
+  name: string;
+  stock: number;
+  category: string;
+  status: "in-stock" | "low-stock" | "out-of-stock";
+  price: number;
+  image: string;
+};
