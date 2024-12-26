@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-function BillingPage({}: Props) {
+function BillingPage() {
   return <div>BillingPage</div>;
 }
 

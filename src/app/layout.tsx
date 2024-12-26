@@ -26,11 +26,7 @@ type Props = {
 function Layout({ children }: Props) {
   return (
     <html>
-      <body
-        className={`${geistMono.variable} antialiased ${geistSans.variable}`}
-      >
-        {children}
-      </body>
+      <body className={`${geistMono.variable} antialiased ${geistSans.variable}`}>{children}</body>
     </html>
   );
 }

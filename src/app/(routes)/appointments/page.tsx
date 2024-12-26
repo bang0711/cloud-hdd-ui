@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-function AppointmentPage({}: Props) {
+function AppointmentPage() {
   return <div>AppointmentPage</div>;
 }
 

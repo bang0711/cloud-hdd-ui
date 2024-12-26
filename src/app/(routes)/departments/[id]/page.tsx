@@ -6,10 +6,13 @@ import { Button } from "@/components/ui/button";
 
 import { ArrowLeft, Users, BedIcon, Stethoscope } from "lucide-react";
 
-import { getStatusColor } from "@/lib/utils";
+import { getDepartmentStatusColor } from "@/lib/utils";
+import Link from "next/link";
+
 type Props = {
   params: Promise<{ id: string }>;
 };
+
 const department = {
   name: "Emergency",
   manager: {
@@ -23,19 +26,8 @@ const department = {
   status: "busy" as const,
   location: "Building A, Floor 1",
   operatingHours: "24/7",
-  facilities: [
-    "Trauma Rooms (4)",
-    "Triage Area",
-    "Resuscitation Bay",
-    "Isolation Rooms (2)",
-  ],
-  equipment: [
-    "CT Scanner",
-    "X-Ray Machine",
-    "Ventilators",
-    "Defibrillators",
-    "Patient Monitors",
-  ],
+  facilities: ["Trauma Rooms (4)", "Triage Area", "Resuscitation Bay", "Isolation Rooms (2)"],
+  equipment: ["CT Scanner", "X-Ray Machine", "Ventilators", "Defibrillators", "Patient Monitors"],
   stats: {
     totalBeds: 30,
     occupiedBeds: 25,
@@ -59,20 +51,17 @@ const department = {
     },
   ],
 };
+
 async function DepartmentDetailPage({ params }: Props) {
   const { id } = await params;
 
-  //   const department = departments.find((dept) => dept.id === id);
-
-  //   if (!department) {
-  //     return redirect("/departments");
-  //   }
-
   return (
     <div className="space-y-6">
-      <Button variant="ghost" className="mb-4">
-        <ArrowLeft className="mr-2 h-4 w-4" /> Back to Departments
-      </Button>
+      <Link href={"/departments"}>
+        <Button variant="ghost" className="mb-4">
+          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Departments
+        </Button>
+      </Link>
 
       <Card>
         <CardContent className="p-6">
@@ -82,12 +71,14 @@ async function DepartmentDetailPage({ params }: Props) {
                 <h2 className="text-2xl font-bold">
                   {department.name} ({id})
                 </h2>
+
                 <div
-                  className={`h-2 w-2 rounded-full ${getStatusColor(
+                  className={`h-2 w-2 rounded-full ${getDepartmentStatusColor(
                     department.status,
                   )}`}
                 />
               </div>
+
               <p className="mt-1 text-muted-foreground">
                 {department.location} • {department.operatingHours}
               </p>
@@ -95,10 +86,10 @@ async function DepartmentDetailPage({ params }: Props) {
             <div className="flex items-center space-x-4">
               <div className="text-right text-sm">
                 <p className="font-medium">Department Head</p>
-                <p className="text-muted-foreground">
-                  {department.manager.name}
-                </p>
+
+                <p className="text-muted-foreground">{department.manager.name}</p>
               </div>
+
               <Avatar>
                 <AvatarImage src={department.manager.avatar} />
                 <AvatarFallback>
@@ -121,6 +112,7 @@ async function DepartmentDetailPage({ params }: Props) {
                 <p className="text-sm text-muted-foreground">Total Staff</p>
                 <p className="text-2xl font-bold">{department.staffCount}</p>
               </div>
+
               <Users className="h-8 w-8 text-muted-foreground" />
             </div>
           </CardContent>
@@ -131,10 +123,9 @@ async function DepartmentDetailPage({ params }: Props) {
             <div className="flex items-center justify-between">
               <div className="space-y-1">
                 <p className="text-sm text-muted-foreground">Available Beds</p>
-                <p className="text-2xl font-bold">
-                  {department.stats.availableBeds}
-                </p>
+                <p className="text-2xl font-bold">{department.stats.availableBeds}</p>
               </div>
+
               <BedIcon className="h-8 w-8 text-muted-foreground" />
             </div>
           </CardContent>
@@ -145,9 +136,7 @@ async function DepartmentDetailPage({ params }: Props) {
             <div className="flex items-center justify-between">
               <div className="space-y-1">
                 <p className="text-sm text-muted-foreground">On Duty Staff</p>
-                <p className="text-2xl font-bold">
-                  {department.stats.onDutyStaff}
-                </p>
+                <p className="text-2xl font-bold">{department.stats.onDutyStaff}</p>
               </div>
               <Stethoscope className="h-8 w-8 text-muted-foreground" />
             </div>
@@ -167,6 +156,7 @@ async function DepartmentDetailPage({ params }: Props) {
             <CardHeader>
               <CardTitle>Department Statistics</CardTitle>
             </CardHeader>
+
             <CardContent>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 {Object.entries(department.stats).map(([key, value]) => (
@@ -177,6 +167,7 @@ async function DepartmentDetailPage({ params }: Props) {
                     <span className="font-medium capitalize">
                       {key.replace(/([A-Z])/g, " $1").trim()}
                     </span>
+
                     <span className="text-muted-foreground">{value}</span>
                   </div>
                 ))}
@@ -190,6 +181,7 @@ async function DepartmentDetailPage({ params }: Props) {
             <CardHeader>
               <CardTitle>Key Personnel</CardTitle>
             </CardHeader>
+
             <CardContent>
               <div className="space-y-4">
                 {department.keyStaff.map((staff, index) => (
@@ -207,11 +199,10 @@ async function DepartmentDetailPage({ params }: Props) {
                             .join("")}
                         </AvatarFallback>
                       </Avatar>
+
                       <div>
                         <p className="font-medium">{staff.name}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {staff.role}
-                        </p>
+                        <p className="text-sm text-muted-foreground">{staff.role}</p>
                       </div>
                     </div>
                     <Badge
@@ -240,10 +231,7 @@ async function DepartmentDetailPage({ params }: Props) {
                     className="flex items-center justify-between rounded-lg border p-4"
                   >
                     <span className="font-medium">{facility}</span>
-                    <Badge
-                      variant="outline"
-                      className="bg-blue-50 text-blue-700"
-                    >
+                    <Badge variant="outline" className="bg-blue-50 text-blue-700">
                       Active
                     </Badge>
                   </div>
@@ -265,10 +253,7 @@ async function DepartmentDetailPage({ params }: Props) {
                     className="flex items-center justify-between rounded-lg border p-4"
                   >
                     <span className="font-medium">{equipment}</span>
-                    <Badge
-                      variant="outline"
-                      className="bg-blue-50 text-blue-700"
-                    >
+                    <Badge variant="outline" className="bg-blue-50 text-blue-700">
                       Available
                     </Badge>
                   </div>

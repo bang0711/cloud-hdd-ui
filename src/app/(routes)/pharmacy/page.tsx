@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-function PharmacyPage({}: Props) {
+function PharmacyPage() {
   return <div>PharmacyPage</div>;
 }
 

@@ -1,10 +1,5 @@
 import { Card } from "@/components/ui/card";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 import { InfoIcon } from "lucide-react";
 
@@ -42,9 +37,7 @@ function MetricCard({
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-bold">{value}</span>
-            <span
-              className={`text-sm ${trend >= 0 ? "text-green-500" : "text-red-500"}`}
-            >
+            <span className={`text-sm ${trend >= 0 ? "text-green-500" : "text-red-500"}`}>
               {trend >= 0 ? "+" : ""}
               {trend}%
             </span>
