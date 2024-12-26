@@ -81,3 +81,12 @@ type Appointment = {
     department: string;
   };
 };
+
+type Bill = {
+  id: string;
+  patientName: string;
+  amount: number;
+  date: string;
+  status: "paid" | "pending" | "overdue";
+  description: string;
+};

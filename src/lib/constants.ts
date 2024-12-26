@@ -226,3 +226,30 @@ export const appointments: Appointment[] = [
     },
   },
 ];
+
+export const bills: Bill[] = [
+  {
+    id: "B001",
+    patientName: "John Smith",
+    amount: 1250.0,
+    date: "2024-02-15",
+    status: "pending",
+    description: "Emergency Room Visit",
+  },
+  {
+    id: "B002",
+    patientName: "Emma Wilson",
+    amount: 3500.0,
+    date: "2024-02-01",
+    status: "paid",
+    description: "Surgery - Appendectomy",
+  },
+  {
+    id: "B003",
+    patientName: "Robert Chen",
+    amount: 750.0,
+    date: "2024-01-15",
+    status: "overdue",
+    description: "Consultation & Tests",
+  },
+];
