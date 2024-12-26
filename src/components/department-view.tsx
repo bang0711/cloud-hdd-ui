@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { departments } from "@/lib/constants";
-import { getStatusColor } from "@/lib/utils";
+import { getDepartmentStatusColor } from "@/lib/utils";
 
 import Link from "next/link";
 
@@ -18,7 +18,7 @@ function DepartmentView() {
               <div className="flex items-center justify-between">
                 <CardTitle className="text-lg">{dept.name}</CardTitle>
 
-                <div className={`h-2 w-2 rounded-full ${getStatusColor(dept.status)}`} />
+                <div className={`h-2 w-2 rounded-full ${getDepartmentStatusColor(dept.status)}`} />
               </div>
 
               <CardDescription>Staff Count: {dept.staffCount}</CardDescription>

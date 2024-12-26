@@ -62,10 +62,7 @@ function ShiftCalendar({ selectedDepartment }: Props) {
     : staffShifts;
 
   const shiftsForDate = filteredStaffShifts.filter((staff) =>
-    staff.shifts.some(
-      (shift) =>
-        format(shift.date, "yyyy-MM-dd") === format(date, "yyyy-MM-dd"),
-    ),
+    staff.shifts.some((shift) => format(shift.date, "yyyy-MM-dd") === format(date, "yyyy-MM-dd"))
   );
   return (
     <div className="flex gap-4">
@@ -78,9 +75,7 @@ function ShiftCalendar({ selectedDepartment }: Props) {
         />
       </div>
       <div className="flex-1">
-        <h3 className="mb-4 text-lg font-medium">
-          Shifts for {format(date, "MMMM d, yyyy")}
-        </h3>
+        <h3 className="mb-4 text-lg font-medium">Shifts for {format(date, "MMMM d, yyyy")}</h3>
         <div className="space-y-4">
           {shiftsForDate.map((staff) => (
             <Card key={staff.id}>
@@ -105,15 +100,10 @@ function ShiftCalendar({ selectedDepartment }: Props) {
                 <div className="flex items-center space-x-2">
                   {staff.shifts
                     .filter(
-                      (shift) =>
-                        format(shift.date, "yyyy-MM-dd") ===
-                        format(date, "yyyy-MM-dd"),
+                      (shift) => format(shift.date, "yyyy-MM-dd") === format(date, "yyyy-MM-dd")
                     )
                     .map((shift) => (
-                      <Badge
-                        key={shift.id}
-                        className={getShiftColor(shift.shift)}
-                      >
+                      <Badge key={shift.id} className={getShiftColor(shift.shift)}>
                         {shift.shift}
                       </Badge>
                     ))}

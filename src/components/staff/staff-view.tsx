@@ -23,9 +23,7 @@ import ShiftCalendar from "./shift-calendar";
 import { getStaffStatusColor } from "@/lib/utils";
 import Link from "next/link";
 
-const departments = Array.from(
-  new Set(staffMembers.map((staff) => staff.department)),
-);
+const departments = Array.from(new Set(staffMembers.map((staff) => staff.department)));
 
 function StaffView() {
   const [selectedDepartment, setSelectedDepartment] = useState<string>("all");
@@ -38,10 +36,7 @@ function StaffView() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="w-[200px]">
-          <Select
-            value={selectedDepartment}
-            onValueChange={setSelectedDepartment}
-          >
+          <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
             <SelectTrigger>
               <SelectValue placeholder="All Departments" />
             </SelectTrigger>
@@ -70,14 +65,12 @@ function StaffView() {
         <TabsContent value="schedule">
           <div className="rounded-lg border bg-card p-6 text-card-foreground shadow-sm">
             <ShiftCalendar
-              selectedDepartment={
-                selectedDepartment === "all" ? "" : selectedDepartment
-              }
+              selectedDepartment={selectedDepartment === "all" ? "" : selectedDepartment}
             />
           </div>
         </TabsContent>
 
-        <TabsContent value="list" className="space-y-4">
+        <TabsContent value="list" className="flex flex-col space-y-4">
           {filteredStaff.map((staff) => (
             <Link href={`/staff/${staff.id}`} key={staff.id}>
               <Card className="cursor-pointer transition-shadow hover:shadow-lg">
@@ -105,9 +98,7 @@ function StaffView() {
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground">
-                        {staff.role}
-                      </p>
+                      <p className="text-sm text-muted-foreground">{staff.role}</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -115,14 +106,13 @@ function StaffView() {
                       <p>{staff.department}</p>
                       <p className="text-muted-foreground">{staff.specialty}</p>
                     </div>
-                    <Badge className={getStaffStatusColor(staff.status)}>
-                      {staff.status}
-                    </Badge>
+                    <Badge className={getStaffStatusColor(staff.status)}>{staff.status}</Badge>
                   </div>
                 </CardContent>
               </Card>
             </Link>
           ))}
+
           {filteredStaff.length === 0 && (
             <p className="py-8 text-center text-muted-foreground">
               No staff members found in this department
