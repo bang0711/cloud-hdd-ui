@@ -59,3 +59,25 @@ type Doctor = {
     [key: string]: string;
   };
 };
+
+type Appointment = {
+  id: string;
+  patientId: string;
+  doctorId: string;
+  date: Date;
+  timeRange: {
+    start: string;
+    end: string;
+  };
+  status: "scheduled" | "completed" | "cancelled";
+  type: string;
+  patient: {
+    name: string;
+    avatar: string;
+  };
+  doctor: {
+    name: string;
+    avatar: string;
+    department: string;
+  };
+};
