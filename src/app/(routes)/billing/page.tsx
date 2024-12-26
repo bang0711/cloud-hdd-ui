@@ -1,7 +1,12 @@
-import React from "react";
+import { BillingView } from "@/components/billing";
 
 function BillingPage() {
-  return <div>BillingPage</div>;
+  return (
+    <div>
+      <h2 className="mb-4 text-xl font-semibold md:text-2xl">Departments</h2>
+      <BillingView />
+    </div>
+  );
 }
 
 export default BillingPage;

@@ -187,3 +187,104 @@ export const doctors: Doctor[] = [
     },
   },
 ];
+
+export const appointments: Appointment[] = [
+  {
+    id: "A001",
+    patientId: "P001",
+    doctorId: "D001",
+    date: new Date(),
+    timeRange: { start: "09:00", end: "10:00" },
+    status: "scheduled",
+    type: "Check-up",
+    patient: {
+      name: "John Smith",
+      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
+    },
+    doctor: {
+      name: "Dr. Sarah Wilson",
+      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
+      department: "Emergency",
+    },
+  },
+  {
+    id: "A002",
+    patientId: "P002",
+    doctorId: "D002",
+    date: new Date(),
+    timeRange: { start: "14:30", end: "15:30" },
+    status: "scheduled",
+    type: "Consultation",
+    patient: {
+      name: "Emma Wilson",
+      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Emma",
+    },
+    doctor: {
+      name: "Dr. Michael Chen",
+      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Michael",
+      department: "Cardiology",
+    },
+  },
+];
+
+export const bills: Bill[] = [
+  {
+    id: "B001",
+    patientName: "John Smith",
+    amount: 1250.0,
+    date: "2024-02-15",
+    status: "pending",
+    description: "Emergency Room Visit",
+  },
+  {
+    id: "B002",
+    patientName: "Emma Wilson",
+    amount: 3500.0,
+    date: "2024-02-01",
+    status: "paid",
+    description: "Surgery - Appendectomy",
+  },
+  {
+    id: "B003",
+    patientName: "Robert Chen",
+    amount: 750.0,
+    date: "2024-01-15",
+    status: "overdue",
+    description: "Consultation & Tests",
+  },
+];
+
+export const medicines: Medicine[] = [
+  {
+    id: "M001",
+    name: "Amoxicillin 500mg",
+    stock: 532,
+    category: "Antibiotics",
+    status: "in-stock",
+    price: 12.99,
+    image:
+      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=400&h=400",
+  },
+  {
+    id: "M002",
+    name: "Lisinopril 10mg",
+    stock: 89,
+    category: "Blood Pressure",
+    status: "low-stock",
+    price: 15.5,
+    image:
+      "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=400&h=400",
+  },
+  {
+    id: "M003",
+    name: "Metformin 850mg",
+    stock: 0,
+    category: "Diabetes",
+    status: "out-of-stock",
+    price: 8.75,
+    image:
+      "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=400&h=400",
+  },
+];
+
+export const categories = ["Antibiotics", "Blood Pressure", "Diabetes", "Pain Relief", "Vitamins"];
