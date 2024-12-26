@@ -1,7 +1,12 @@
-import React from "react";
+import { StaffView } from "@/components/staff";
 
 function StaffPage() {
-  return <div>StaffPage</div>;
+  return (
+    <div>
+      <h2 className="mb-4 text-xl font-semibold md:text-2xl">Staff</h2>
+      <StaffView />
+    </div>
+  );
 }
 
 export default StaffPage;
