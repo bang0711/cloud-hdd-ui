@@ -15,7 +15,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
-import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -62,8 +61,7 @@ function BookAppointmentDialog({ doctorId, doctorName }: Props) {
 
   const [selectedTimeRange, setSelectedTimeRange] = useState<TimeRange>();
 
-  const timeRanges =
-    date && selectedDoctor ? generateTimeRanges(date, selectedDoctor) : [];
+  const timeRanges = date && selectedDoctor ? generateTimeRanges(date, selectedDoctor) : [];
 
   const doctor = doctors.find((d) => d.id === selectedDoctor);
 
@@ -98,11 +96,7 @@ function BookAppointmentDialog({ doctorId, doctorName }: Props) {
 
               <SelectContent>
                 {doctors.map((doctor) => (
-                  <SelectItem
-                    key={doctor.id}
-                    value={doctor.id}
-                    className="flex items-center gap-2"
-                  >
+                  <SelectItem key={doctor.id} value={doctor.id} className="flex items-center gap-2">
                     <div className="flex items-center gap-2">
                       <Avatar className="h-6 w-6">
                         <AvatarImage src={doctor.avatar} />
@@ -134,11 +128,7 @@ function BookAppointmentDialog({ doctorId, doctorName }: Props) {
 
             <SelectContent>
               {patients.map((patient) => (
-                <SelectItem
-                  key={patient.id}
-                  value={patient.id}
-                  className="flex items-center gap-2"
-                >
+                <SelectItem key={patient.id} value={patient.id} className="flex items-center gap-2">
                   <div className="flex items-center gap-2">
                     <Avatar className="h-6 w-6">
                       <AvatarImage src={patient.avatar} />
@@ -178,8 +168,7 @@ function BookAppointmentDialog({ doctorId, doctorName }: Props) {
 
                 {doctor && (
                   <p className="mb-4 text-sm text-muted-foreground">
-                    {format(date, "EEEE")}:{" "}
-                    {doctor.schedule[format(date, "EEEE").toLowerCase()]}
+                    {format(date, "EEEE")}: {doctor.schedule[format(date, "EEEE").toLowerCase()]}
                   </p>
                 )}
               </div>
@@ -189,14 +178,10 @@ function BookAppointmentDialog({ doctorId, doctorName }: Props) {
                   timeRanges.map((range) => (
                     <Button
                       key={`${range.start}-${range.end}`}
-                      variant={
-                        selectedTimeRange?.start === range.start
-                          ? "default"
-                          : "outline"
-                      }
+                      variant={selectedTimeRange?.start === range.start ? "default" : "outline"}
                       className={cn(
                         "justify-start",
-                        !range.available && "cursor-not-allowed opacity-50",
+                        !range.available && "cursor-not-allowed opacity-50"
                       )}
                       disabled={!range.available}
                       onClick={() => setSelectedTimeRange(range)}
@@ -205,12 +190,6 @@ function BookAppointmentDialog({ doctorId, doctorName }: Props) {
                         <span>
                           {range.start} - {range.end}
                         </span>
-
-                        {!range.available && (
-                          <Badge variant="secondary" className="ml-2">
-                            Unavailable
-                          </Badge>
-                        )}
                       </div>
                     </Button>
                   ))
@@ -227,9 +206,7 @@ function BookAppointmentDialog({ doctorId, doctorName }: Props) {
         <DialogFooter>
           <Button
             type="submit"
-            disabled={
-              !date || !selectedTimeRange || !selectedPatient || !selectedDoctor
-            }
+            disabled={!date || !selectedTimeRange || !selectedPatient || !selectedDoctor}
           >
             Confirm Booking
           </Button>

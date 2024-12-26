@@ -187,3 +187,42 @@ export const doctors: Doctor[] = [
     },
   },
 ];
+
+export const appointments: Appointment[] = [
+  {
+    id: "A001",
+    patientId: "P001",
+    doctorId: "D001",
+    date: new Date(),
+    timeRange: { start: "09:00", end: "10:00" },
+    status: "scheduled",
+    type: "Check-up",
+    patient: {
+      name: "John Smith",
+      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
+    },
+    doctor: {
+      name: "Dr. Sarah Wilson",
+      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
+      department: "Emergency",
+    },
+  },
+  {
+    id: "A002",
+    patientId: "P002",
+    doctorId: "D002",
+    date: new Date(),
+    timeRange: { start: "14:30", end: "15:30" },
+    status: "scheduled",
+    type: "Consultation",
+    patient: {
+      name: "Emma Wilson",
+      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Emma",
+    },
+    doctor: {
+      name: "Dr. Michael Chen",
+      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Michael",
+      department: "Cardiology",
+    },
+  },
+];
