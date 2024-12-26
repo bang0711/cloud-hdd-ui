@@ -120,3 +120,70 @@ export const patients: Patient[] = [
     admissionDate: "2024-02-10",
   },
 ];
+
+export const staffMembers: Staff[] = [
+  {
+    id: "S001",
+    name: "Dr. Sarah Wilson",
+    role: "Senior Doctor",
+    department: "Emergency",
+    status: "on-duty",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
+    specialty: "Emergency Medicine",
+    isManager: true,
+    managingDepartment: "Emergency",
+  },
+  {
+    id: "S002",
+    name: "Dr. Michael Chen",
+    role: "Specialist",
+    department: "Cardiology",
+    status: "on-duty",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Michael",
+    specialty: "Cardiology",
+    isManager: true,
+    managingDepartment: "Cardiology",
+  },
+  {
+    id: "S003",
+    name: "Nurse Emma Brown",
+    role: "Head Nurse",
+    department: "Pediatrics",
+    status: "off-duty",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Emma",
+    specialty: "Pediatric Care",
+  },
+];
+
+export const doctors: Doctor[] = [
+  {
+    id: "D001",
+    name: "Dr. Sarah Wilson",
+    department: "Emergency",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
+    schedule: {
+      monday: "Morning Shift",
+      tuesday: "Morning Shift",
+      wednesday: "Off",
+      thursday: "Night Shift",
+      friday: "Night Shift",
+      saturday: "Off",
+      sunday: "On Call",
+    },
+  },
+  {
+    id: "D002",
+    name: "Dr. Michael Chen",
+    department: "Cardiology",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Michael",
+    schedule: {
+      monday: "Afternoon Shift",
+      tuesday: "Morning Shift",
+      wednesday: "Morning Shift",
+      thursday: "Off",
+      friday: "Afternoon Shift",
+      saturday: "Morning Shift",
+      sunday: "Off",
+    },
+  },
+];

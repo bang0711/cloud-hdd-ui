@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 import { ArrowLeft, Users, BedIcon, Stethoscope } from "lucide-react";
 
-import { getStatusColor } from "@/lib/utils";
+import { getDepartmentStatusColor } from "@/lib/utils";
 import Link from "next/link";
 
 type Props = {
@@ -84,7 +84,7 @@ async function DepartmentDetailPage({ params }: Props) {
                 </h2>
 
                 <div
-                  className={`h-2 w-2 rounded-full ${getStatusColor(
+                  className={`h-2 w-2 rounded-full ${getDepartmentStatusColor(
                     department.status,
                   )}`}
                 />
