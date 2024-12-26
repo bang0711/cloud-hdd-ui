@@ -9,3 +9,13 @@ type Department = {
   staffCount: number;
   status: "active" | "busy" | "maintenance";
 };
+
+type Patient = {
+  id: string;
+  name: string;
+  age: number;
+  condition: "stable" | "critical" | "recovering";
+  room: string;
+  avatar: string;
+  admissionDate: string;
+};

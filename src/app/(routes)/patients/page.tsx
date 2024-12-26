@@ -1,9 +1,12 @@
-import React from "react";
+import { PatientsView } from "@/components/patients";
 
-type Props = {};
-
-function PatientsPage({}: Props) {
-  return <div>PatientsPage</div>;
+function PatientsPage() {
+  return (
+    <div>
+      <h2 className="mb-4 text-xl font-semibold md:text-2xl">Patients</h2>
+      <PatientsView />
+    </div>
+  );
 }
 
 export default PatientsPage;

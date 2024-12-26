@@ -10,8 +10,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { departments } from "@/lib/constants";
-
 import { getStatusColor } from "@/lib/utils";
+
 import Link from "next/link";
 
 function DepartmentView() {
@@ -23,12 +23,15 @@ function DepartmentView() {
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-lg">{dept.name}</CardTitle>
+
                 <div
                   className={`h-2 w-2 rounded-full ${getStatusColor(dept.status)}`}
                 />
               </div>
+
               <CardDescription>Staff Count: {dept.staffCount}</CardDescription>
             </CardHeader>
+
             <CardContent>
               <div className="flex items-center space-x-4">
                 <Avatar>
@@ -40,6 +43,7 @@ function DepartmentView() {
                       .join("")}
                   </AvatarFallback>
                 </Avatar>
+
                 <div>
                   <p className="text-sm font-medium">{dept.manager.name}</p>
                   <p className="text-sm text-muted-foreground">
