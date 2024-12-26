@@ -5,6 +5,19 @@ const nextConfig: NextConfig = {
   experimental: {
     typedRoutes: true,
   },
+  images: {
+    remotePatterns: [{
+      hostname: '**',
+      pathname: '**',
+      protocol: 'https',
+
+    },{
+      hostname: '**',
+      pathname: '**',
+      protocol: 'http',
+      
+    }]
+  }
 };
 
 export default nextConfig;

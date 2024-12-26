@@ -73,9 +73,7 @@ async function DepartmentDetailPage({ params }: Props) {
                 </h2>
 
                 <div
-                  className={`h-2 w-2 rounded-full ${getDepartmentStatusColor(
-                    department.status,
-                  )}`}
+                  className={`h-2 w-2 rounded-full ${getDepartmentStatusColor(department.status)}`}
                 />
               </div>
 
