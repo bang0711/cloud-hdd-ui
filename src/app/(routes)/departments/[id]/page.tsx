@@ -7,9 +7,12 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Users, BedIcon, Stethoscope } from "lucide-react";
 
 import { getStatusColor } from "@/lib/utils";
+import Link from "next/link";
+
 type Props = {
   params: Promise<{ id: string }>;
 };
+
 const department = {
   name: "Emergency",
   manager: {
@@ -59,20 +62,17 @@ const department = {
     },
   ],
 };
+
 async function DepartmentDetailPage({ params }: Props) {
   const { id } = await params;
 
-  //   const department = departments.find((dept) => dept.id === id);
-
-  //   if (!department) {
-  //     return redirect("/departments");
-  //   }
-
   return (
     <div className="space-y-6">
-      <Button variant="ghost" className="mb-4">
-        <ArrowLeft className="mr-2 h-4 w-4" /> Back to Departments
-      </Button>
+      <Link href={"/departments"}>
+        <Button variant="ghost" className="mb-4">
+          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Departments
+        </Button>
+      </Link>
 
       <Card>
         <CardContent className="p-6">
@@ -82,12 +82,14 @@ async function DepartmentDetailPage({ params }: Props) {
                 <h2 className="text-2xl font-bold">
                   {department.name} ({id})
                 </h2>
+
                 <div
                   className={`h-2 w-2 rounded-full ${getStatusColor(
                     department.status,
                   )}`}
                 />
               </div>
+
               <p className="mt-1 text-muted-foreground">
                 {department.location} • {department.operatingHours}
               </p>
@@ -95,10 +97,12 @@ async function DepartmentDetailPage({ params }: Props) {
             <div className="flex items-center space-x-4">
               <div className="text-right text-sm">
                 <p className="font-medium">Department Head</p>
+
                 <p className="text-muted-foreground">
                   {department.manager.name}
                 </p>
               </div>
+
               <Avatar>
                 <AvatarImage src={department.manager.avatar} />
                 <AvatarFallback>
@@ -121,6 +125,7 @@ async function DepartmentDetailPage({ params }: Props) {
                 <p className="text-sm text-muted-foreground">Total Staff</p>
                 <p className="text-2xl font-bold">{department.staffCount}</p>
               </div>
+
               <Users className="h-8 w-8 text-muted-foreground" />
             </div>
           </CardContent>
@@ -135,6 +140,7 @@ async function DepartmentDetailPage({ params }: Props) {
                   {department.stats.availableBeds}
                 </p>
               </div>
+
               <BedIcon className="h-8 w-8 text-muted-foreground" />
             </div>
           </CardContent>
@@ -167,6 +173,7 @@ async function DepartmentDetailPage({ params }: Props) {
             <CardHeader>
               <CardTitle>Department Statistics</CardTitle>
             </CardHeader>
+
             <CardContent>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 {Object.entries(department.stats).map(([key, value]) => (
@@ -177,6 +184,7 @@ async function DepartmentDetailPage({ params }: Props) {
                     <span className="font-medium capitalize">
                       {key.replace(/([A-Z])/g, " $1").trim()}
                     </span>
+
                     <span className="text-muted-foreground">{value}</span>
                   </div>
                 ))}
@@ -190,6 +198,7 @@ async function DepartmentDetailPage({ params }: Props) {
             <CardHeader>
               <CardTitle>Key Personnel</CardTitle>
             </CardHeader>
+
             <CardContent>
               <div className="space-y-4">
                 {department.keyStaff.map((staff, index) => (
@@ -207,6 +216,7 @@ async function DepartmentDetailPage({ params }: Props) {
                             .join("")}
                         </AvatarFallback>
                       </Avatar>
+
                       <div>
                         <p className="font-medium">{staff.name}</p>
                         <p className="text-sm text-muted-foreground">

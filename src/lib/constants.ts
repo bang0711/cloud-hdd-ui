@@ -90,3 +90,33 @@ export const departments: Department[] = [
     status: "maintenance",
   },
 ];
+
+export const patients: Patient[] = [
+  {
+    id: "P001",
+    name: "John Smith",
+    age: 45,
+    condition: "stable",
+    room: "201",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
+    admissionDate: "2024-01-15",
+  },
+  {
+    id: "P002",
+    name: "Emma Wilson",
+    age: 32,
+    condition: "recovering",
+    room: "105",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Emma",
+    admissionDate: "2024-02-01",
+  },
+  {
+    id: "P003",
+    name: "Robert Chen",
+    age: 58,
+    condition: "critical",
+    room: "ICU-3",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Robert",
+    admissionDate: "2024-02-10",
+  },
+];

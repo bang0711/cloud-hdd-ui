@@ -17,3 +17,12 @@ export const getStatusColor = (status: Department["status"]) => {
       return "bg-gray-500";
   }
 };
+
+export const getConditionColor = (condition: Patient["condition"]) => {
+  const colors = {
+    stable: "bg-green-100 text-green-800",
+    recovering: "bg-blue-100 text-blue-800",
+    critical: "bg-red-100 text-red-800",
+  };
+  return colors[condition];
+};
