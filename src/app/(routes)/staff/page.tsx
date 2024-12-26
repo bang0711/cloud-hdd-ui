@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-function StaffPage({}: Props) {
+function StaffPage() {
   return <div>StaffPage</div>;
 }
 

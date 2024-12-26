@@ -82,9 +82,7 @@ async function PatientDetailPage({ params }: Props) {
               </p>
 
               <div className="mt-2 flex items-center gap-2">
-                <Badge className={getConditionColor(patient.condition)}>
-                  {patient.condition}
-                </Badge>
+                <Badge className={getConditionColor(patient.condition)}>{patient.condition}</Badge>
 
                 <Badge variant="outline">Blood Type: {patient.bloodType}</Badge>
               </div>
@@ -108,13 +106,11 @@ async function PatientDetailPage({ params }: Props) {
             </CardHeader>
             <CardContent className="space-y-2">
               <div>
-                <span className="font-medium">Primary Doctor:</span>{" "}
-                {patient.primaryDoctor}
+                <span className="font-medium">Primary Doctor:</span> {patient.primaryDoctor}
               </div>
 
               <div>
-                <span className="font-medium">Admission Date:</span>{" "}
-                {patient.admissionDate}
+                <span className="font-medium">Admission Date:</span> {patient.admissionDate}
               </div>
 
               <div>
@@ -126,8 +122,7 @@ async function PatientDetailPage({ params }: Props) {
               </div>
 
               <div>
-                <span className="font-medium">Diagnosis:</span>{" "}
-                {patient.diagnosis}
+                <span className="font-medium">Diagnosis:</span> {patient.diagnosis}
               </div>
 
               <div>
@@ -177,12 +172,8 @@ async function PatientDetailPage({ params }: Props) {
                 {patient.medications.map((med, index) => (
                   <div key={index} className="space-y-2 rounded-lg border p-4">
                     <div className="font-medium">{med.name}</div>
-                    <div className="text-sm text-muted-foreground">
-                      Dosage: {med.dosage}
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      Frequency: {med.frequency}
-                    </div>
+                    <div className="text-sm text-muted-foreground">Dosage: {med.dosage}</div>
+                    <div className="text-sm text-muted-foreground">Frequency: {med.frequency}</div>
                   </div>
                 ))}
               </div>
@@ -205,16 +196,12 @@ async function PatientDetailPage({ params }: Props) {
                   >
                     <div className="space-y-1">
                       <div className="font-medium">{apt.type}</div>
-                      <div className="text-sm text-muted-foreground">
-                        {apt.doctor}
-                      </div>
+                      <div className="text-sm text-muted-foreground">{apt.doctor}</div>
                     </div>
 
                     <div className="text-right">
                       <div>{apt.date}</div>
-                      <div className="text-sm text-muted-foreground">
-                        {apt.time}
-                      </div>
+                      <div className="text-sm text-muted-foreground">{apt.time}</div>
                     </div>
                   </div>
                 ))}

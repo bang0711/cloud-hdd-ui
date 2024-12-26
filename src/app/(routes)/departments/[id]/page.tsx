@@ -26,19 +26,8 @@ const department = {
   status: "busy" as const,
   location: "Building A, Floor 1",
   operatingHours: "24/7",
-  facilities: [
-    "Trauma Rooms (4)",
-    "Triage Area",
-    "Resuscitation Bay",
-    "Isolation Rooms (2)",
-  ],
-  equipment: [
-    "CT Scanner",
-    "X-Ray Machine",
-    "Ventilators",
-    "Defibrillators",
-    "Patient Monitors",
-  ],
+  facilities: ["Trauma Rooms (4)", "Triage Area", "Resuscitation Bay", "Isolation Rooms (2)"],
+  equipment: ["CT Scanner", "X-Ray Machine", "Ventilators", "Defibrillators", "Patient Monitors"],
   stats: {
     totalBeds: 30,
     occupiedBeds: 25,
@@ -83,11 +72,7 @@ async function DepartmentDetailPage({ params }: Props) {
                   {department.name} ({id})
                 </h2>
 
-                <div
-                  className={`h-2 w-2 rounded-full ${getStatusColor(
-                    department.status,
-                  )}`}
-                />
+                <div className={`h-2 w-2 rounded-full ${getStatusColor(department.status)}`} />
               </div>
 
               <p className="mt-1 text-muted-foreground">
@@ -98,9 +83,7 @@ async function DepartmentDetailPage({ params }: Props) {
               <div className="text-right text-sm">
                 <p className="font-medium">Department Head</p>
 
-                <p className="text-muted-foreground">
-                  {department.manager.name}
-                </p>
+                <p className="text-muted-foreground">{department.manager.name}</p>
               </div>
 
               <Avatar>
@@ -136,9 +119,7 @@ async function DepartmentDetailPage({ params }: Props) {
             <div className="flex items-center justify-between">
               <div className="space-y-1">
                 <p className="text-sm text-muted-foreground">Available Beds</p>
-                <p className="text-2xl font-bold">
-                  {department.stats.availableBeds}
-                </p>
+                <p className="text-2xl font-bold">{department.stats.availableBeds}</p>
               </div>
 
               <BedIcon className="h-8 w-8 text-muted-foreground" />
@@ -151,9 +132,7 @@ async function DepartmentDetailPage({ params }: Props) {
             <div className="flex items-center justify-between">
               <div className="space-y-1">
                 <p className="text-sm text-muted-foreground">On Duty Staff</p>
-                <p className="text-2xl font-bold">
-                  {department.stats.onDutyStaff}
-                </p>
+                <p className="text-2xl font-bold">{department.stats.onDutyStaff}</p>
               </div>
               <Stethoscope className="h-8 w-8 text-muted-foreground" />
             </div>
@@ -219,9 +198,7 @@ async function DepartmentDetailPage({ params }: Props) {
 
                       <div>
                         <p className="font-medium">{staff.name}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {staff.role}
-                        </p>
+                        <p className="text-sm text-muted-foreground">{staff.role}</p>
                       </div>
                     </div>
                     <Badge
@@ -250,10 +227,7 @@ async function DepartmentDetailPage({ params }: Props) {
                     className="flex items-center justify-between rounded-lg border p-4"
                   >
                     <span className="font-medium">{facility}</span>
-                    <Badge
-                      variant="outline"
-                      className="bg-blue-50 text-blue-700"
-                    >
+                    <Badge variant="outline" className="bg-blue-50 text-blue-700">
                       Active
                     </Badge>
                   </div>
@@ -275,10 +249,7 @@ async function DepartmentDetailPage({ params }: Props) {
                     className="flex items-center justify-between rounded-lg border p-4"
                   >
                     <span className="font-medium">{equipment}</span>
-                    <Badge
-                      variant="outline"
-                      className="bg-blue-50 text-blue-700"
-                    >
+                    <Badge variant="outline" className="bg-blue-50 text-blue-700">
                       Available
                     </Badge>
                   </div>

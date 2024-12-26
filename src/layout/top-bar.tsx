@@ -11,12 +11,7 @@ function TopBar({ onMenuClick }: Props) {
   return (
     <div className="border-b">
       <div className="flex h-16 items-center px-4">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="mr-2 md:hidden"
-          onClick={onMenuClick}
-        >
+        <Button variant="ghost" size="icon" className="mr-2 md:hidden" onClick={onMenuClick}>
           <Menu className="h-5 w-5" />
         </Button>
 

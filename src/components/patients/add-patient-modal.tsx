@@ -49,9 +49,7 @@ function AddPatientModal() {
         <DialogHeader>
           <DialogTitle>Add New Patient</DialogTitle>
 
-          <DialogDescription>
-            Enter the patient&apos;s information below.
-          </DialogDescription>
+          <DialogDescription>Enter the patient&apos;s information below.</DialogDescription>
         </DialogHeader>
 
         <div className="grid gap-4 py-4">
@@ -77,23 +75,14 @@ function AddPatientModal() {
             <Label htmlFor="name" className="text-right">
               Name
             </Label>
-            <Input
-              id="name"
-              className="col-span-3"
-              placeholder="Enter patient name"
-            />
+            <Input id="name" className="col-span-3" placeholder="Enter patient name" />
           </div>
 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="age" className="text-right">
               Age
             </Label>
-            <Input
-              id="age"
-              type="number"
-              className="col-span-3"
-              placeholder="Enter patient age"
-            />
+            <Input id="age" type="number" className="col-span-3" placeholder="Enter patient age" />
           </div>
 
           <div className="grid grid-cols-4 items-center gap-4">

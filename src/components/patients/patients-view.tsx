@@ -33,18 +33,14 @@ function PatientsView() {
 
                   <div>
                     <h3 className="font-medium">{patient.name}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Room {patient.room}
-                    </p>
+                    <p className="text-sm text-muted-foreground">Room {patient.room}</p>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-4">
                   <div className="text-right text-sm">
                     <p>Age: {patient.age}</p>
-                    <p className="text-muted-foreground">
-                      Admitted: {patient.admissionDate}
-                    </p>
+                    <p className="text-muted-foreground">Admitted: {patient.admissionDate}</p>
                   </div>
 
                   <Badge className={getConditionColor(patient.condition)}>
