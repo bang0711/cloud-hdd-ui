@@ -1,4 +1,4 @@
-import { PatientsView } from "@/components/patients";
+import PatientsView from "./_components/patients-view";
 
 function PatientsPage() {
   return (

@@ -19,7 +19,7 @@ import {
 import { ShieldCheck } from "lucide-react";
 
 import AddStaffDialog from "./add-staff-dialog";
-import ShiftCalendar from "./shift-calendar";
+import ShiftCalendar from "../shared/shift-calendar";
 import { getStaffStatusColor } from "@/lib/utils";
 import Link from "next/link";
 

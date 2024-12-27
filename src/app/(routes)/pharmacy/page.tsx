@@ -1,5 +1,5 @@
-import { PharmacyView } from "@/components/pharmacy";
 import React from "react";
+import PharmacyView from "./_components/pharmacy-view";
 
 function PharmacyPage() {
   return (
