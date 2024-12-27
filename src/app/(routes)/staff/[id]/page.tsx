@@ -8,9 +8,8 @@ import { ShieldCheck, ArrowLeft } from "lucide-react";
 
 import Link from "next/link";
 
-import BookAppointmentDialog from "@/components/book-appointment-dialog";
-
-import { ShiftCalendar } from "@/components/staff";
+import BookAppointmentDialog from "@/components/shared/book-appointment-dialog";
+import ShiftCalendar from "../_components/shared/shift-calendar";
 
 type Props = {
   params: Promise<{ id: string }>;

@@ -1,4 +1,5 @@
-import { StaffView } from "@/components/staff";
+import StaffView from "./_components/staff-view";
+
 
 function StaffPage() {
   return (

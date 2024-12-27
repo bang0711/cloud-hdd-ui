@@ -33,7 +33,6 @@ function Sidebar({ className }: Props) {
           <div className="flex flex-col space-y-1">
             {ROUTES.map((route, index) => (
               <Fragment key={index}>
-                {/* @ts-expect-error: route.href is a valid path */}
                 <Link href={`/${route.href}`} prefetch={false}>
                   <Button
                     variant={isActive(`/${route.href}`) ? "secondary" : "ghost"}

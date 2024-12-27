@@ -1,4 +1,5 @@
-import { DashboardLayout } from "@/layout";
+
+import DashboardLayout from "@/layouts/dashboard";
 import React from "react";
 
 type Props = {

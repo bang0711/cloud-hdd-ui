@@ -1,4 +1,4 @@
-import DepartmentView from "@/components/department-view";
+import DepartmentView from "@/app/(root)/_components/department-view";
 
 function DepartmentPage() {
   return (

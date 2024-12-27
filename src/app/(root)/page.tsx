@@ -1,6 +1,6 @@
-import DepartmentView from "@/components/department-view";
-import { MetricsGrid } from "@/components/home";
+import DepartmentView from "@/app/(root)/_components/department-view";
 import React from "react";
+import MetricsGrid from "./_components/metrics-grid";
 
 function RootPage() {
   return (
