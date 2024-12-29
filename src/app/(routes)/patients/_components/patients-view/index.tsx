@@ -2,13 +2,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 
-import { patients } from "@/lib/constants";
-import { getConditionColor } from "@/lib/utils";
-
 import AddPatientModal from "./add-patient-modal";
 import Link from "next/link";
+import { Patient } from "@/types";
 
-function PatientsView() {
+type Props = {
+  patients: Patient[];
+};
+
+function PatientsView({ patients }: Props) {
   return (
     <div className="space-y-4">
       <div className="flex justify-end">
@@ -22,9 +24,9 @@ function PatientsView() {
               <CardContent className="flex items-center justify-between p-6">
                 <div className="flex items-center space-x-4">
                   <Avatar>
-                    <AvatarImage src={patient.avatar} />
+                    <AvatarImage src={"https://api.dicebear.com/7.x/avataaars/svg?seed=John"} />
                     <AvatarFallback>
-                      {patient.name
+                      {patient.lastName
                         .split(" ")
                         .map((n) => n[0])
                         .join("")}
@@ -32,19 +34,25 @@ function PatientsView() {
                   </Avatar>
 
                   <div>
-                    <h3 className="font-medium">{patient.name}</h3>
-                    <p className="text-sm text-muted-foreground">Room {patient.room}</p>
+                    <h3 className="font-medium">
+                      {patient.firstName} {patient.lastName}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {new Date(patient.dob).toDateString()}
+                    </p>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-4">
                   <div className="text-right text-sm">
-                    <p>Age: {patient.age}</p>
-                    <p className="text-muted-foreground">Admitted: {patient.admissionDate}</p>
+                    <p>
+                      Gender: <span className="capitalize">{patient.gender}</span>
+                    </p>
+                    <p className="text-muted-foreground">Blodd Type: {patient.bloodType}</p>
                   </div>
 
-                  <Badge className={getConditionColor(patient.condition)}>
-                    {patient.condition}
+                  <Badge variant={patient.gender === "male" ? "outline" : "default"}>
+                    {patient.gender}
                   </Badge>
                 </div>
               </CardContent>
