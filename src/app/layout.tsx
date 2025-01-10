@@ -5,6 +5,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import "../styles/globals.css";
 
+import Providers from "@/provider";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -26,7 +28,9 @@ type Props = {
 function Layout({ children }: Props) {
   return (
     <html lang="en">
-      <body className={`${geistMono.variable} antialiased ${geistSans.variable}`}>{children}</body>
+      <body className={`${geistMono.variable} antialiased ${geistSans.variable}`}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
