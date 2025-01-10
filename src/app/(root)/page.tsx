@@ -1,4 +1,4 @@
-import DepartmentView from "@/app/(root)/_components/department-view";
+// import DepartmentView from "@/app/(root)/_components/department-view";
 import React from "react";
 import MetricsGrid from "./_components/metrics-grid";
 
@@ -9,7 +9,7 @@ function RootPage() {
 
       <div>
         <h2 className="mb-4 text-2xl font-semibold">Departments</h2>
-        <DepartmentView />
+        {/* <DepartmentView /> */}
       </div>
     </main>
   );

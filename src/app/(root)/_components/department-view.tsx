@@ -3,12 +3,14 @@ import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import { departments } from "@/lib/constants";
-import { getDepartmentStatusColor } from "@/lib/utils";
-
 import Link from "next/link";
+import { Department } from "@/types";
 
-function DepartmentView() {
+type Props = {
+  departments: Department[];
+};
+
+function DepartmentView({ departments }: Props) {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       {departments.map((dept) => (
@@ -17,28 +19,30 @@ function DepartmentView() {
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-lg">{dept.name}</CardTitle>
-
-                <div className={`h-2 w-2 rounded-full ${getDepartmentStatusColor(dept.status)}`} />
               </div>
 
-              <CardDescription>Staff Count: {dept.staffCount}</CardDescription>
+              <CardDescription>Staff Count: {dept._count.staffs}</CardDescription>
             </CardHeader>
 
             <CardContent>
               <div className="flex items-center space-x-4">
                 <Avatar>
-                  <AvatarImage src={dept.manager.avatar} />
+                  <AvatarImage src={"https://api.dicebear.com/7.x/avataaars/svg?seed=John"} />
                   <AvatarFallback>
-                    {dept.manager.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
+                    {dept.manager.firstName +
+                      " " +
+                      dept.manager.lastName
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
                   </AvatarFallback>
                 </Avatar>
 
                 <div>
-                  <p className="text-sm font-medium">{dept.manager.name}</p>
-                  <p className="text-sm text-muted-foreground">{dept.manager.role}</p>
+                  <p className="text-sm font-medium">
+                    {dept.manager.firstName + " " + dept.manager.lastName}
+                  </p>
+                  <p className="text-sm text-muted-foreground">{dept.manager.jobType}</p>
                 </div>
               </div>
             </CardContent>

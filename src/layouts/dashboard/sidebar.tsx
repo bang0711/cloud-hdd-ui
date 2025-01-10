@@ -33,7 +33,7 @@ function Sidebar({ className }: Props) {
           <div className="flex flex-col space-y-1">
             {ROUTES.map((route, index) => (
               <Fragment key={index}>
-                <Link href={`/${route.href}`} prefetch={false}>
+                <Link href={`${route.href}`} prefetch={false}>
                   <Button
                     variant={isActive(`/${route.href}`) ? "secondary" : "ghost"}
                     className="w-full justify-start font-bold"

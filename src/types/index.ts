@@ -3,6 +3,16 @@ export type PatientResponse = {
   pagination: Pagination;
 };
 
+export type StaffResponse = {
+  data: Staff[];
+  pagination: Pagination;
+};
+
+export type DepartmentRepsonse = {
+  data: Department[];
+  pagination: Pagination;
+};
+
 export type Patient = {
   id: string;
   firstName: string;
@@ -55,6 +65,31 @@ export type Staff = {
   firstName: string;
   lastName: string;
   jobType: string;
+  salary: number;
+  hiredDate: string;
+  dob: string;
+  department: Department;
+  manageDepartment: Department;
+  shifts: Shift[];
+};
+
+export type Shift = {
+  dayOfWeek: string;
+  time: string;
+};
+
+export type Department = {
+  name: string;
+  id: string;
+  manager: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    jobType: string;
+  };
+  _count: {
+    staffs: number;
+  };
 };
 
 export type TreamentHistory = {

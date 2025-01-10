@@ -25,9 +25,25 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { ImagePlus } from "lucide-react";
 
+import { instance } from "@/lib/instance";
+
+import { useRouter } from "next/navigation";
+
 function AddPatientModal() {
-  const [condition, setCondition] = useState<string>("stable");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    dob: "",
+    gender: "Male",
+    bloodType: "O+",
+    cid: "",
+  });
   const [image, setImage] = useState<string>("");
+
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -39,8 +55,37 @@ function AddPatientModal() {
       reader.readAsDataURL(file);
     }
   };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Form Data:", formData);
+    // Submit form logic here
+    try {
+      setLoading(true);
+      const res = await instance.post("/patients", formData);
+      console.log("Response:", res);
+
+      if (res.status === 201) {
+        setOpen(false);
+        router.refresh();
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>Add Patient</Button>
       </DialogTrigger>
@@ -48,65 +93,134 @@ function AddPatientModal() {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add New Patient</DialogTitle>
-
           <DialogDescription>Enter the patient&apos;s information below.</DialogDescription>
         </DialogHeader>
 
         <div className="grid gap-4 py-4">
+          {/* Avatar Upload */}
           <div className="flex justify-center">
-            <div className="relative">
+            <label className="relative cursor-pointer">
               <Avatar className="h-24 w-24">
                 <AvatarImage src={image} />
                 <AvatarFallback>
                   <ImagePlus className="h-8 w-8 text-muted-foreground" />
                 </AvatarFallback>
               </Avatar>
-
               <Input
                 type="file"
                 accept="image/*"
                 className="absolute inset-0 cursor-pointer opacity-0"
                 onChange={handleImageUpload}
               />
+            </label>
+          </div>
+          <form className="grid gap-4 py-4" action="" onSubmit={handleSubmit}>
+            {/* First Name */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="firstName" className="text-right">
+                First Name
+              </Label>
+              <Input
+                id="firstName"
+                className="col-span-3"
+                placeholder="Enter first name"
+                value={formData.firstName}
+                onChange={handleChange}
+              />
             </div>
-          </div>
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" className="col-span-3" placeholder="Enter patient name" />
-          </div>
+            {/* Last Name */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="lastName" className="text-right">
+                Last Name
+              </Label>
+              <Input
+                id="lastName"
+                className="col-span-3"
+                placeholder="Enter last name"
+                value={formData.lastName}
+                onChange={handleChange}
+              />
+            </div>
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="age" className="text-right">
-              Age
-            </Label>
-            <Input id="age" type="number" className="col-span-3" placeholder="Enter patient age" />
-          </div>
+            {/* Date of Birth */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="dob" className="text-right">
+                Date of Birth
+              </Label>
+              <Input
+                id="dob"
+                type="date"
+                className="col-span-3"
+                value={formData.dob}
+                onChange={handleChange}
+              />
+            </div>
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="condition" className="text-right">
-              Condition
-            </Label>
+            {/* Gender */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="gender" className="text-right">
+                Gender
+              </Label>
+              <Select
+                value={formData.gender}
+                onValueChange={(value) => setFormData((prev) => ({ ...prev, gender: value }))}
+              >
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Select gender" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Male">Male</SelectItem>
+                  <SelectItem value="Female">Female</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-            <Select value={condition} onValueChange={setCondition}>
-              <SelectTrigger className="col-span-3">
-                <SelectValue placeholder="Select condition" />
-              </SelectTrigger>
+            {/* Blood Type */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="bloodType" className="text-right">
+                Blood Type
+              </Label>
+              <Select
+                value={formData.bloodType}
+                onValueChange={(value) => setFormData((prev) => ({ ...prev, bloodType: value }))}
+              >
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Select blood type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="A+">A+</SelectItem>
+                  <SelectItem value="A-">A-</SelectItem>
+                  <SelectItem value="B+">B+</SelectItem>
+                  <SelectItem value="B-">B-</SelectItem>
+                  <SelectItem value="AB+">AB+</SelectItem>
+                  <SelectItem value="AB-">AB-</SelectItem>
+                  <SelectItem value="O+">O+</SelectItem>
+                  <SelectItem value="O-">O-</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-              <SelectContent>
-                <SelectItem value="stable">Stable</SelectItem>
-                <SelectItem value="critical">Critical</SelectItem>
-                <SelectItem value="recovering">Recovering</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+            {/* CID */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="cid" className="text-right">
+                CID
+              </Label>
+              <Input
+                id="cid"
+                className="col-span-3"
+                placeholder="Enter CID"
+                value={formData.cid}
+                onChange={handleChange}
+              />
+            </div>
+            <DialogFooter>
+              <Button type="submit" disabled={loading}>
+                {loading ? "Adding..." : "Add Patient"}
+              </Button>
+            </DialogFooter>
+          </form>
         </div>
-
-        <DialogFooter>
-          <Button type="submit">Add Patient</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

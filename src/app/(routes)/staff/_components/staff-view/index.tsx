@@ -1,6 +1,6 @@
 "use client";
 
-import { staffMembers } from "@/lib/constants";
+import { departments } from "@/lib/constants";
 
 import React, { useState } from "react";
 
@@ -20,33 +20,43 @@ import { ShieldCheck } from "lucide-react";
 
 import AddStaffDialog from "./add-staff-dialog";
 import ShiftCalendar from "../shared/shift-calendar";
-import { getStaffStatusColor } from "@/lib/utils";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const departments = Array.from(new Set(staffMembers.map((staff) => staff.department)));
+import { Staff } from "@/types";
 
-function StaffView() {
-  const [selectedDepartment, setSelectedDepartment] = useState<string>("all");
+type Props = {
+  staff: Staff[];
+  currentDepartment: string;
+};
 
-  const filteredStaff =
-    selectedDepartment === "all"
-      ? staffMembers
-      : staffMembers.filter((staff) => staff.department === selectedDepartment);
+function StaffView({ staff, currentDepartment }: Props) {
+  const [selectedDepartment, setSelectedDepartment] = useState<string>("All"); // Match the SelectItem value
+
+  const router = useRouter();
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="w-[200px]">
-          <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
+          <Select
+            value={currentDepartment}
+            onValueChange={(value) => {
+              setSelectedDepartment(value);
+              router.push(`?department=${value}`);
+            }}
+          >
             <SelectTrigger>
               <SelectValue placeholder="All Departments" />
             </SelectTrigger>
 
             <SelectContent>
-              <SelectItem value="all">All Departments</SelectItem>
+              <SelectItem value="All">All Departments</SelectItem>
 
               {departments.map((dept) => (
-                <SelectItem key={dept} value={dept}>
-                  {dept}
+                <SelectItem key={dept.name} value={dept.name}>
+                  {dept.name}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -71,49 +81,51 @@ function StaffView() {
         </TabsContent>
 
         <TabsContent value="list" className="flex flex-col space-y-4">
-          {filteredStaff.map((staff) => (
+          {staff.map((staff) => (
             <Link href={`/staff/${staff.id}`} key={staff.id}>
               <Card className="cursor-pointer transition-shadow hover:shadow-lg">
                 <CardContent className="flex items-center justify-between p-6">
                   <div className="flex items-center space-x-4">
                     <Avatar>
-                      <AvatarImage src={staff.avatar} />
+                      <AvatarImage src={"https://api.dicebear.com/7.x/avataaars/svg?seed=John"} />
                       <AvatarFallback>
-                        {staff.name
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
+                        {staff.firstName +
+                          " " +
+                          staff.lastName
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")}
                       </AvatarFallback>
                     </Avatar>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="font-medium">{staff.name}</h3>
-                        {staff.isManager && (
+                        <h3 className="font-medium">
+                          {staff.firstName} {staff.firstName}
+                        </h3>
+                        {staff.id === staff.department.manager.id && (
                           <Badge
                             variant="outline"
                             className="flex items-center gap-1 border-blue-200 bg-blue-50 text-blue-700"
                           >
                             <ShieldCheck className="h-3 w-3" />
-                            {staff.managingDepartment} Manager
+                            {staff.department.name} Manager
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground">{staff.role}</p>
+                      <p className="text-sm text-muted-foreground">{staff.jobType}</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
                     <div className="text-right text-sm">
-                      <p>{staff.department}</p>
-                      <p className="text-muted-foreground">{staff.specialty}</p>
+                      <p>{staff.department.name}</p>
                     </div>
-                    <Badge className={getStaffStatusColor(staff.status)}>{staff.status}</Badge>
                   </div>
                 </CardContent>
               </Card>
             </Link>
           ))}
 
-          {filteredStaff.length === 0 && (
+          {staff.length === 0 && (
             <p className="py-8 text-center text-muted-foreground">
               No staff members found in this department
             </p>
