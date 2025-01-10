@@ -2,15 +2,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 
-import { ShieldCheck, ArrowLeft } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 
-import Link from "next/link";
-
-import BookAppointmentDialog from "@/components/book-appointment-dialog";
-
-import { ShiftCalendar } from "@/components/staff";
+import BookAppointmentDialog from "@/components/shared/book-appointment-dialog";
+import ShiftCalendar from "../_components/shared/shift-calendar";
+import { instance } from "@/lib/instance";
+import { Staff } from "@/types";
+import ReturnButton from "@/components/shared/return-button";
+import { dayOfWeek } from "@/lib/constants";
+import DeleteStaffDialog from "./_components/delete-staff";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -43,37 +44,31 @@ const staffMember = {
   },
 };
 
-const getStatusColor = (status: "on-duty" | "off-duty" | "on-leave") => {
-  const colors = {
-    "on-duty": "bg-green-100 text-green-800",
-    "off-duty": "bg-gray-100 text-gray-800",
-    "on-leave": "bg-yellow-100 text-yellow-800",
-  };
-  return colors[status];
-};
-
 async function StaffDetailPage({ params }: Props) {
   const { id } = await params;
 
+  const res = await instance.get(`/staff/${id}`);
+  const staff = res.data as Staff;
+
+  const { department, dob, firstName, hiredDate, jobType, lastName, manageDepartment, salary } =
+    staff;
+
+  const name = `${firstName} ${lastName}`;
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <Link href={"/staff"}>
-          <Button variant="outline" className="mb-4">
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Staff List
-          </Button>
-        </Link>
+        <ReturnButton href="/staff" title="Back to Staff List" />
 
-        <BookAppointmentDialog doctorId={staffMember.id} doctorName={staffMember.name} />
+        <BookAppointmentDialog doctorId={id} doctorName={name} />
       </div>
 
       <Card>
-        <CardContent className="p-6">
+        <CardContent className="flex justify-between p-6">
           <div className="flex items-start space-x-6">
             <Avatar className="h-24 w-24">
               <AvatarImage src={staffMember.avatar} />
               <AvatarFallback>
-                {staffMember.name
+                {name
                   .split(" ")
                   .map((n) => n[0])
                   .join("")}
@@ -82,30 +77,28 @@ async function StaffDetailPage({ params }: Props) {
 
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <h2 className="text-2xl font-bold">
-                  {staffMember.name} ({id})
-                </h2>
+                <h2 className="text-2xl font-bold">{name}</h2>
 
-                {staffMember.isManager && (
+                {manageDepartment && (
                   <Badge
                     variant="outline"
                     className="flex items-center gap-1 border-blue-200 bg-blue-50 text-blue-700"
                   >
                     <ShieldCheck className="h-3 w-3" />
-                    {staffMember.managingDepartment} Manager
+                    {manageDepartment.name} Manager
                   </Badge>
                 )}
               </div>
 
-              <p className="text-muted-foreground">{staffMember.role}</p>
+              <p className="text-muted-foreground">{jobType}</p>
 
               <div className="mt-2 flex items-center gap-2">
-                <Badge className={getStatusColor(staffMember.status)}>{staffMember.status}</Badge>
-                <Badge variant="outline">{staffMember.department}</Badge>
-                <Badge variant="outline">{staffMember.specialty}</Badge>
+                <Badge variant="outline">{department.name}</Badge>
               </div>
             </div>
           </div>
+
+          <DeleteStaffDialog staffId={staff.id} />
         </CardContent>
       </Card>
 
@@ -118,20 +111,22 @@ async function StaffDetailPage({ params }: Props) {
         <TabsContent value="info" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Contact Information</CardTitle>
+              <CardTitle>Information</CardTitle>
             </CardHeader>
 
             <CardContent className="space-y-2">
               <div>
-                <span className="font-medium">Email:</span> {staffMember.email}
+                <span className="font-medium">Salary:</span> {salary}
               </div>
 
               <div>
-                <span className="font-medium">Phone:</span> {staffMember.phone}
+                <span className="font-medium">Date of birth:</span>{" "}
+                {new Date(dob).toLocaleDateString()}
               </div>
 
               <div>
-                <span className="font-medium">Address:</span> {staffMember.address}
+                <span className="font-medium">Hired Date:</span>{" "}
+                {new Date(hiredDate).toLocaleDateString()}
               </div>
             </CardContent>
           </Card>
@@ -171,19 +166,26 @@ async function StaffDetailPage({ params }: Props) {
 
             <CardContent>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {Object.entries(staffMember.schedule).map(([day, shift]) => (
-                  <div
-                    key={day}
-                    className="flex items-center justify-between rounded-lg border p-3"
-                  >
-                    <span className="sfont-medium capitalize">{day}</span>
-                    <span
-                      className={`rounded px-2 py-1 ${shift === "Off" ? "bg-gray-100" : "bg-blue-100"}`}
-                    >
-                      {shift}
-                    </span>
-                  </div>
-                ))}
+                {dayOfWeek.map((day) => {
+                  const days = staff.shifts.filter((shift) => shift.dayOfWeek === day);
+                  return (
+                    <div key={day} className="flex flex-col rounded-lg border p-3">
+                      <span className="mb-2 font-medium capitalize">{day}</span>
+                      <div className="flex flex-wrap gap-2">
+                        {days.length !== 0 &&
+                          days.map((shift, index) => (
+                            <span key={index} className={`rounded bg-blue-100 px-2 py-1`}>
+                              {shift.time}
+                            </span>
+                          ))}
+
+                        {days.length === 0 && (
+                          <span className="rounded bg-gray-100 px-2 py-1">Off</span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </CardContent>
           </Card>

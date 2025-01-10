@@ -3,8 +3,9 @@ import React from "react";
 import { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
-import "./globals.css";
+import "../styles/globals.css";
 
+import Providers from "@/provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,11 +27,11 @@ type Props = {
 
 function Layout({ children }: Props) {
   return (
-      <html lang="en">
-        <body className={`${geistMono.variable} antialiased ${geistSans.variable}`}>
-          {children}
-        </body>
-      </html>
+    <html lang="en">
+      <body className={`${geistMono.variable} antialiased ${geistSans.variable}`}>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
   );
 }
 

@@ -1,18 +1,19 @@
-import DepartmentView from "@/components/department-view";
-import { MetricsGrid } from "@/components/home";
 import React from "react";
+import { getServerSession } from "next-auth";
 
-function RootPage() {
-  return (
-    <main className="space-y-6 p-6">
-      <MetricsGrid />
+import SignIn from "./_components/sign-in";
+import SignOut from "./_components/sign-out";
 
-      <div>
-        <h2 className="mb-4 text-2xl font-semibold">Departments</h2>
-        <DepartmentView />
-      </div>
-    </main>
-  );
+import { authOptions } from "../api/auth/[...nextauth]/route";
+
+async function Homepage() {
+  const session = await getServerSession(authOptions);
+  console.log(session);
+
+  if (session) {
+    return <SignOut />;
+  }
+  return <SignIn />;
 }
 
-export default RootPage;
+export default Homepage;
