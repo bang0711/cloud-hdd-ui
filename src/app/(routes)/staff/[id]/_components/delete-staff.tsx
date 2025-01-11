@@ -32,8 +32,8 @@ function DeleteStaffDialog({ staffId }: Props) {
 
       if (res.status === 200) {
         setOpen(false);
-        router.refresh();
         router.push("/staff");
+        router.refresh();
       }
     } catch (error) {
       console.error("Error:", error);
