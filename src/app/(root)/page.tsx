@@ -2,18 +2,24 @@ import React from "react";
 import { getServerSession } from "next-auth";
 
 import SignIn from "./_components/sign-in";
-import SignOut from "./_components/sign-out";
 
 import { authOptions } from "../api/auth/[...nextauth]/route";
+
+import { redirect } from "next/navigation";
 
 async function Homepage() {
   const session = await getServerSession(authOptions);
   console.log(session);
 
   if (session) {
-    return <SignOut />;
+    redirect("/patients");
   }
-  return <SignIn />;
+
+  return (
+    <div className="flex h-screen items-center justify-center">
+      <SignIn />
+    </div>
+  );
 }
 
 export default Homepage;

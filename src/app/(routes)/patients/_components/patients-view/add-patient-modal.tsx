@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,11 +21,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
 import { ImagePlus } from "lucide-react";
-
 import { instance } from "@/lib/instance";
-
 import { useRouter } from "next/navigation";
 
 function AddPatientModal() {
@@ -37,24 +33,13 @@ function AddPatientModal() {
     gender: "Male",
     bloodType: "O+",
     cid: "",
+    image: "", // Add imageUrl to formData
   });
-  const [image, setImage] = useState<string>("");
-
+  const [file, setFile] = useState<File | null>(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
@@ -67,10 +52,55 @@ function AddPatientModal() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form Data:", formData);
-    // Submit form logic here
+
+    if (!file) {
+      alert("Please select an image to upload.");
+      return;
+    }
+
     try {
       setLoading(true);
-      const res = await instance.post("/patients", formData);
+
+      // Step 1: Get the pre-signed URL for S3 upload
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ filename: file.name, contentType: file.type }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to get pre-signed URL.");
+      }
+
+      const { url, fields } = await response.json();
+
+      // Step 2: Upload the image to S3
+      const formDataS3 = new FormData();
+      Object.entries(fields).forEach(([key, value]) => {
+        formDataS3.append(key, value as string);
+      });
+      formDataS3.append("file", file);
+
+      const uploadResponse = await fetch(url, {
+        method: "POST",
+        body: formDataS3,
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error("Failed to upload image to S3.");
+      }
+
+      // Step 3: Get the uploaded image URL
+      const imageUrl = `${url}/${fields.key}`;
+
+      // Step 4: Submit the form data with the image URL to your backend
+      const res = await instance.post("/patients", {
+        ...formData,
+        image: imageUrl,
+      });
+
       console.log("Response:", res);
 
       if (res.status === 201) {
@@ -78,7 +108,8 @@ function AddPatientModal() {
         router.refresh();
       }
     } catch (error) {
-      console.log("Error:", error);
+      console.error("Error:", error);
+      alert("An error occurred while submitting the form.");
     } finally {
       setLoading(false);
     }
@@ -101,7 +132,7 @@ function AddPatientModal() {
           <div className="flex justify-center">
             <label className="relative cursor-pointer">
               <Avatar className="h-24 w-24">
-                <AvatarImage src={image} />
+                <AvatarImage src={file ? URL.createObjectURL(file) : formData.image} />
                 <AvatarFallback>
                   <ImagePlus className="h-8 w-8 text-muted-foreground" />
                 </AvatarFallback>
@@ -110,7 +141,12 @@ function AddPatientModal() {
                 type="file"
                 accept="image/*"
                 className="absolute inset-0 cursor-pointer opacity-0"
-                onChange={handleImageUpload}
+                onChange={(e) => {
+                  const files = e.target.files;
+                  if (files) {
+                    setFile(files[0]);
+                  }
+                }}
               />
             </label>
           </div>
