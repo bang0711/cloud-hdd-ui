@@ -24,6 +24,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ImagePlus } from "lucide-react";
 import { instance } from "@/lib/instance";
 import { useRouter } from "next/navigation";
+import { uploadToS3 } from "@/lib/upload";
 
 function AddPatientModal() {
   const [formData, setFormData] = useState({
@@ -51,7 +52,6 @@ function AddPatientModal() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
 
     if (!file) {
       alert("Please select an image to upload.");
@@ -61,47 +61,12 @@ function AddPatientModal() {
     try {
       setLoading(true);
 
-      // Step 1: Get the pre-signed URL for S3 upload
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/upload", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ filename: file.name, contentType: file.type }),
-      });
+      const imageRes = await uploadToS3(file);
 
-      if (!response.ok) {
-        throw new Error("Failed to get pre-signed URL.");
-      }
-
-      const { url, fields } = await response.json();
-
-      // Step 2: Upload the image to S3
-      const formDataS3 = new FormData();
-      Object.entries(fields).forEach(([key, value]) => {
-        formDataS3.append(key, value as string);
-      });
-      formDataS3.append("file", file);
-
-      const uploadResponse = await fetch(url, {
-        method: "POST",
-        body: formDataS3,
-      });
-
-      if (!uploadResponse.ok) {
-        throw new Error("Failed to upload image to S3.");
-      }
-
-      // Step 3: Get the uploaded image URL
-      const imageUrl = `${url}/${fields.key}`;
-
-      // Step 4: Submit the form data with the image URL to your backend
       const res = await instance.post("/patients", {
         ...formData,
-        image: imageUrl,
+        image: imageRes.url,
       });
-
-      console.log("Response:", res);
 
       if (res.status === 201) {
         setOpen(false);

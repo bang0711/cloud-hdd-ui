@@ -9,7 +9,6 @@ import { redirect } from "next/navigation";
 
 async function Homepage() {
   const session = await getServerSession(authOptions);
-  console.log(session);
 
   if (session) {
     redirect("/patients");

@@ -29,7 +29,6 @@ function DeletePatient({ patientId }: Props) {
     try {
       setLoading(true);
       const res = await instance.delete(`/patients/${patientId}`);
-      console.log("Response:", res);
 
       if (res.status === 200) {
         setOpen(false);
@@ -37,7 +36,7 @@ function DeletePatient({ patientId }: Props) {
         router.push("/patients");
       }
     } catch (error) {
-      console.log("Error:", error);
+      console.error("Error:", error);
     } finally {
       setLoading(false);
     }

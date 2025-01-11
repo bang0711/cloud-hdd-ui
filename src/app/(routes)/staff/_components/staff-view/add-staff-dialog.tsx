@@ -102,7 +102,6 @@ function AddStaffDialog({ departmentId }: Props) {
 
     try {
       const res = await instance.post("/staff", formData);
-      console.log("Response:", res);
 
       if (res.status === 201) {
         setOpen(false);

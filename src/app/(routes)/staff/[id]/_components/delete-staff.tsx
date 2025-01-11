@@ -29,7 +29,6 @@ function DeleteStaffDialog({ staffId }: Props) {
     try {
       setLoading(true);
       const res = await instance.delete(`/staff/${staffId}`);
-      console.log("Response:", res);
 
       if (res.status === 200) {
         setOpen(false);
@@ -37,7 +36,7 @@ function DeleteStaffDialog({ staffId }: Props) {
         router.push("/staff");
       }
     } catch (error) {
-      console.log("Error:", error);
+      console.error("Error:", error);
     } finally {
       setLoading(false);
     }
