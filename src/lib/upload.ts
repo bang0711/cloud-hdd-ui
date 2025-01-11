@@ -28,8 +28,8 @@ export const uploadToS3 = async (file: File) => {
 
   if (response.ok) {
     // Construct the public URL for the uploaded file
-    const publicUrl = `https://${params.Bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${params.Key}`;
-    return { success: true, url: publicUrl };
+    const url = `${process.env.NEXT_PUBLIC_CLOUND_FRONT_URL}${params.Key}`;
+    return { success: true, url };
   } else {
     return { success: false, error: "Upload failed" };
   }
