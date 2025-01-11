@@ -72,6 +72,7 @@ export type Staff = {
   department: Department;
   manageDepartment: Department;
   shifts: Shift[];
+  image: string;
 };
 
 export type Shift = {

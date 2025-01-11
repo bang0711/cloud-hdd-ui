@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-import { Settings, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 
 import { signOut } from "next-auth/react";
 
@@ -59,10 +59,6 @@ function Sidebar({ className }: Props) {
 
         <div className="px-3 py-2">
           <div className="flex flex-col space-y-1">
-            <Button variant="ghost" className="w-full justify-start">
-              <Settings className="mr-2 h-4 w-4" />
-              Settings
-            </Button>
             <Button
               onClick={handleSignOut}
               variant="ghost"

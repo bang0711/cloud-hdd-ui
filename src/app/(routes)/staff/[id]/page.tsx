@@ -5,43 +5,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { ShieldCheck } from "lucide-react";
 
-import BookAppointmentDialog from "@/components/shared/book-appointment-dialog";
-import ShiftCalendar from "../_components/shared/shift-calendar";
+import { dayOfWeek } from "@/lib/constants";
 import { instance } from "@/lib/instance";
 import { Staff } from "@/types";
+
 import ReturnButton from "@/components/shared/return-button";
-import { dayOfWeek } from "@/lib/constants";
+
 import DeleteStaffDialog from "./_components/delete-staff";
 
 type Props = {
   params: Promise<{ id: string }>;
-};
-
-const staffMember = {
-  id: "S001",
-  name: "Dr. Sarah Wilson",
-  role: "Senior Doctor",
-  department: "Emergency",
-  status: "on-duty" as const,
-  avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
-  specialty: "Emergency Medicine",
-  isManager: true,
-  managingDepartment: "Emergency",
-  email: "sarah.wilson@hospital.com",
-  phone: "+1 (555) 123-4567",
-  address: "123 Medical Center Dr, Suite 456",
-  education: "MD - Harvard Medical School",
-  experience: "15 years",
-  certifications: ["Board Certified in Emergency Medicine", "Advanced Trauma Life Support"],
-  schedule: {
-    monday: "Morning Shift",
-    tuesday: "Morning Shift",
-    wednesday: "Off",
-    thursday: "Night Shift",
-    friday: "Night Shift",
-    saturday: "Off",
-    sunday: "On Call",
-  },
 };
 
 async function StaffDetailPage({ params }: Props) {
@@ -50,23 +23,30 @@ async function StaffDetailPage({ params }: Props) {
   const res = await instance.get(`/staff/${id}`);
   const staff = res.data as Staff;
 
-  const { department, dob, firstName, hiredDate, jobType, lastName, manageDepartment, salary } =
-    staff;
+  const {
+    department,
+    dob,
+    firstName,
+    hiredDate,
+    jobType,
+    lastName,
+    manageDepartment,
+    salary,
+    image,
+  } = staff;
 
   const name = `${firstName} ${lastName}`;
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <ReturnButton href="/staff" title="Back to Staff List" />
-
-        <BookAppointmentDialog doctorId={id} doctorName={name} />
       </div>
 
       <Card>
         <CardContent className="flex justify-between p-6">
           <div className="flex items-start space-x-6">
             <Avatar className="h-24 w-24">
-              <AvatarImage src={staffMember.avatar} />
+              <AvatarImage src={image} />
               <AvatarFallback>
                 {name
                   .split(" ")
@@ -130,32 +110,6 @@ async function StaffDetailPage({ params }: Props) {
               </div>
             </CardContent>
           </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Professional Information</CardTitle>
-            </CardHeader>
-
-            <CardContent className="space-y-2">
-              <div>
-                <span className="font-medium">Education:</span> {staffMember.education}
-              </div>
-
-              <div>
-                <span className="font-medium">Experience:</span> {staffMember.experience}
-              </div>
-
-              <div>
-                <span className="font-medium">Certifications:</span>
-
-                <ul className="ml-4 mt-1 list-inside list-disc">
-                  {staffMember.certifications.map((cert) => (
-                    <li key={cert}>{cert}</li>
-                  ))}
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
         </TabsContent>
 
         <TabsContent value="schedule">
@@ -189,14 +143,6 @@ async function StaffDetailPage({ params }: Props) {
               </div>
             </CardContent>
           </Card>
-
-          <div className="mt-6">
-            <Card>
-              <CardContent className="p-6">
-                <ShiftCalendar selectedDepartment={staffMember.department} />
-              </CardContent>
-            </Card>
-          </div>
         </TabsContent>
       </Tabs>
     </div>

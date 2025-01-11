@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import {
   Select,
   SelectContent,
@@ -67,11 +67,6 @@ function StaffView({ staff, currentDepartment }: Props) {
       </div>
 
       <Tabs defaultValue="list" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="list">Staff List</TabsTrigger>
-          <TabsTrigger value="schedule">Schedule</TabsTrigger>
-        </TabsList>
-
         <TabsContent value="schedule">
           <div className="rounded-lg border bg-card p-6 text-card-foreground shadow-sm">
             <ShiftCalendar
@@ -87,7 +82,7 @@ function StaffView({ staff, currentDepartment }: Props) {
                 <CardContent className="flex items-center justify-between p-6">
                   <div className="flex items-center space-x-4">
                     <Avatar>
-                      <AvatarImage src={"https://api.dicebear.com/7.x/avataaars/svg?seed=John"} />
+                      <AvatarImage src={staff.image} />
                       <AvatarFallback>
                         {staff.firstName +
                           " " +

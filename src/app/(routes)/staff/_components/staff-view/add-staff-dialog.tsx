@@ -22,10 +22,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Checkbox } from "@/components/ui/checkbox";
 import { ImagePlus } from "lucide-react";
 import { instance } from "@/lib/instance";
 import axios from "axios";
+import { uploadToS3 } from "@/lib/upload";
 
 const roles = ["Doctor", "Nurse", "Specialist", "Technician"];
 
@@ -34,17 +34,16 @@ type Props = {
 };
 
 function AddStaffDialog({ departmentId }: Props) {
-  const [departments, setDepartments] = useState<{ id: string; name: string }[]>([]); // State to store departments
-  const [image, setImage] = useState<string>("");
+  const [departments, setDepartments] = useState<{ id: string; name: string }[]>([]);
+  const [file, setFile] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     dob: "",
     jobType: "Doctor",
     salary: 0,
-    hiredDate: "",
-    departmentId: departmentId || "", // Use the provided departmentId or default to empty
-    isManager: false,
+    departmentId: departmentId || "",
+    image: "", // Add image URL field
   });
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -54,9 +53,7 @@ function AddStaffDialog({ departmentId }: Props) {
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const res = await axios.get(
-          "https://041ept9ku8.execute-api.us-east-1.amazonaws.com/prod/department"
-        );
+        const res = await axios.get(process.env.NEXT_PUBLIC_API_GATE_WAY!);
         setDepartments(res.data);
       } catch (error) {
         console.error("Failed to fetch departments:", error);
@@ -72,17 +69,6 @@ function AddStaffDialog({ departmentId }: Props) {
       setFormData((prev) => ({ ...prev, departmentId }));
     }
   }, [departmentId]);
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -103,8 +89,24 @@ function AddStaffDialog({ departmentId }: Props) {
     e.preventDefault();
     setLoading(true);
 
+    if (!file) {
+      alert("Please select an image to upload.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      const res = await instance.post("/staff", formData);
+      // Upload image to S3
+      const imageRes = await uploadToS3(file);
+
+      // Prepare the payload
+      const payload = {
+        ...formData,
+        image: imageRes.url, // Include the image URL
+      };
+
+      // Submit form data with image URL
+      const res = await instance.post("/staff", payload);
 
       if (res.status === 201) {
         setOpen(false);
@@ -116,7 +118,6 @@ function AddStaffDialog({ departmentId }: Props) {
       setLoading(false);
     }
   };
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -135,7 +136,7 @@ function AddStaffDialog({ departmentId }: Props) {
             <div className="flex justify-center">
               <label className="relative cursor-pointer">
                 <Avatar className="h-24 w-24">
-                  <AvatarImage src={image} />
+                  <AvatarImage src={file ? URL.createObjectURL(file) : formData.image} />
                   <AvatarFallback>
                     <ImagePlus className="h-8 w-8 text-muted-foreground" />
                   </AvatarFallback>
@@ -144,7 +145,12 @@ function AddStaffDialog({ departmentId }: Props) {
                   type="file"
                   accept="image/*"
                   className="absolute inset-0 cursor-pointer opacity-0"
-                  onChange={handleImageUpload}
+                  onChange={(e) => {
+                    const files = e.target.files;
+                    if (files) {
+                      setFile(files[0]);
+                    }
+                  }}
                 />
               </label>
             </div>
@@ -260,22 +266,6 @@ function AddStaffDialog({ departmentId }: Props) {
                   ))}
                 </SelectContent>
               </Select>
-            </div>
-
-            {/* Is Manager */}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <div className="col-span-3 col-start-2 flex items-center space-x-2">
-                <Checkbox
-                  id="isManager"
-                  checked={formData.isManager}
-                  onCheckedChange={(checked) =>
-                    setFormData((prev) => ({ ...prev, isManager: !!checked }))
-                  }
-                />
-                <Label htmlFor="isManager" className="text-sm font-normal">
-                  Department Manager
-                </Label>
-              </div>
             </div>
           </div>
 
