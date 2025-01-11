@@ -25,6 +25,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ImagePlus } from "lucide-react";
 import { instance } from "@/lib/instance";
+import axios from "axios";
 
 const roles = ["Doctor", "Nurse", "Specialist", "Technician"];
 
@@ -53,7 +54,9 @@ function AddStaffDialog({ departmentId }: Props) {
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const res = await instance.get("/department/list");
+        const res = await axios.get(
+          "https://041ept9ku8.execute-api.us-east-1.amazonaws.com/prod/department"
+        );
         setDepartments(res.data);
       } catch (error) {
         console.error("Failed to fetch departments:", error);
