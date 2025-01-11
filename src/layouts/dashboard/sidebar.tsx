@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils";
 
 import { Settings, LogOut } from "lucide-react";
 
-import Link from "next/link";
+import { signOut } from "next-auth/react";
 
-import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 import { Fragment } from "react";
 
@@ -21,6 +22,14 @@ function Sidebar({ className }: Props) {
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname === path;
+
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
+    router.push("/");
+    router.refresh();
+  };
 
   return (
     <div className={cn("min-h-screen pb-12", className)}>
@@ -55,6 +64,7 @@ function Sidebar({ className }: Props) {
               Settings
             </Button>
             <Button
+              onClick={handleSignOut}
               variant="ghost"
               className="w-full justify-start text-red-500 hover:bg-red-50 hover:text-red-500"
             >

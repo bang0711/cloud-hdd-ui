@@ -21,6 +21,7 @@ export type Patient = {
   gender: string;
   bloodType: string;
   cid: string;
+  image: string;
   address: Address;
   insurance: Insurance;
   treatmentHistories: TreamentHistory[];

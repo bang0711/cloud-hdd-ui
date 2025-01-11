@@ -24,7 +24,7 @@ function PatientsView({ patients }: Props) {
               <CardContent className="flex items-center justify-between p-6">
                 <div className="flex items-center space-x-4">
                   <Avatar>
-                    <AvatarImage src={"https://api.dicebear.com/7.x/avataaars/svg?seed=John"} />
+                    <AvatarImage src={patient.image} />
                     <AvatarFallback>
                       {patient.lastName
                         .split(" ")

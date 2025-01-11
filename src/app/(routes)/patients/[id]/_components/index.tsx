@@ -16,8 +16,17 @@ type Props = {
 };
 
 async function PatientDetailView({ patient }: Props) {
-  const { address, insurance, patientAllergies, firstName, lastName, gender, bloodType, dob } =
-    patient;
+  const {
+    address,
+    insurance,
+    patientAllergies,
+    firstName,
+    lastName,
+    gender,
+    bloodType,
+    dob,
+    image,
+  } = patient;
 
   return (
     <div className="space-y-6">
@@ -27,7 +36,7 @@ async function PatientDetailView({ patient }: Props) {
         <CardContent className="flex justify-between p-6">
           <div className="flex items-start space-x-6">
             <Avatar className="h-24 w-24">
-              <AvatarImage src={"https://api.dicebear.com/7.x/avataaars/svg?seed=John"} />
+              <AvatarImage src={image} />
               <AvatarFallback>
                 {firstName
                   .split(" ")

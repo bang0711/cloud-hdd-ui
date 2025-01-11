@@ -11,7 +11,7 @@ function SignIn() {
     }); // Force re-authentication
   };
 
-  return <Button onClick={handleSignIn}>SignIn</Button>;
+  return <Button onClick={handleSignIn}>Login with AWS Cognito</Button>;
 }
 
 export default SignIn;
