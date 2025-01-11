@@ -1,12 +1,11 @@
 import DashboardLayout from "@/layouts/dashboard";
+import { authOptions } from "@/lib/authOption";
 
 import { getServerSession } from "next-auth";
 
 import { redirect } from "next/navigation";
 
 import React from "react";
-
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
 type Props = {
   children: React.ReactNode;

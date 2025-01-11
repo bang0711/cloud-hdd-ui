@@ -3,9 +3,8 @@ import { getServerSession } from "next-auth";
 
 import SignIn from "./_components/sign-in";
 
-import { authOptions } from "../api/auth/[...nextauth]/route";
-
 import { redirect } from "next/navigation";
+import { authOptions } from "@/lib/authOption";
 
 async function Homepage() {
   const session = await getServerSession(authOptions);
