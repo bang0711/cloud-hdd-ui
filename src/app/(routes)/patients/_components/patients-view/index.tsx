@@ -48,7 +48,7 @@ function PatientsView({ patients }: Props) {
                     <p>
                       Gender: <span className="capitalize">{patient.gender}</span>
                     </p>
-                    <p className="text-muted-foreground">Blodd Type: {patient.bloodType}</p>
+                    <p className="text-muted-foreground">Blood Type: {patient.bloodType}</p>
                   </div>
 
                   <Badge variant={patient.gender === "male" ? "outline" : "default"}>
