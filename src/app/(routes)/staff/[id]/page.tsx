@@ -33,6 +33,7 @@ async function StaffDetailPage({ params }: Props) {
     manageDepartment,
     salary,
     image,
+    qualifications,
   } = staff;
 
   const name = `${firstName} ${lastName}`;
@@ -107,6 +108,16 @@ async function StaffDetailPage({ params }: Props) {
               <div>
                 <span className="font-medium">Hired Date:</span>{" "}
                 {new Date(hiredDate).toLocaleDateString()}
+              </div>
+
+              <div>
+                <span className="font-medium">Certifications:</span>
+
+                <ul className="ml-4 mt-1 list-inside list-disc">
+                  {qualifications.map((qualification) => (
+                    <li key={qualification.qualificationId}>{qualification.qualification}</li>
+                  ))}
+                </ul>
               </div>
             </CardContent>
           </Card>

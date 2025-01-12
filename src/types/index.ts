@@ -73,6 +73,14 @@ export type Staff = {
   manageDepartment: Department;
   shifts: Shift[];
   image: string;
+  qualifications: Qualification[];
+};
+
+export type Qualification = {
+  year: number;
+  qualification: string;
+  institution: string;
+  qualificationId: string;
 };
 
 export type Shift = {
